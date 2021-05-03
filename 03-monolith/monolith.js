@@ -33,10 +33,10 @@ for(const line of lines) {
                     if (!found) {
                         word_freqs.push([word, 1])
                     } else if (word_freqs.length > 1) {
-                        for(let i = word_freqs.length-1; i > -1 ; i--) {
+                        for(let i = pair_idx-1; i > -1 ; i--) {
                             if (word_freqs[pair_idx][1] > word_freqs[i][1]) {
-                                cur_word = word_freqs[pair_idx]
-                                word_freqs[pair_idx] = word_freqs[i]
+                                cur_word = [word_freqs[pair_idx][0], word_freqs[pair_idx][1]]
+                                word_freqs[pair_idx] = [word_freqs[i][0], word_freqs[i][1]]
                                 word_freqs[i] = cur_word
                                 pair_idx = i
                             }

@@ -1,5 +1,5 @@
 pride-and-prejudice.txt ../03-monolith
-00:05:35 testing 03-monolith/monolith.js with pride-and-prejudice.txt
+00:17:23 testing 03-monolith/monolith.js with pride-and-prejudice.txt
 difference
 ---------
 
@@ -11039,5 +11039,5 @@ Archive                               Foundation,         how                   
 subscribe                             to                  our                      email                newsletter               to                   hear                     about                new                   eBooks.
 
 monolith.js FAILED in 0h 0m 0s!
-Ran 1 tests with 1 failures in 0h 0m 2s.
+Ran 1 tests with 1 failures in 0h 0m 1s.
 FAILED!
