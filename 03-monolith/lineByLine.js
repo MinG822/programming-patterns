@@ -1,14 +1,23 @@
 const fs = require('fs')
+const readline = require('readline')
 let word_freqs = []
 let stop_words = fs.readFileSync('stop_words.txt','utf8').split(',')
+
 let lowerAlpahs = Array(26).fill(1).map((_, i) => String.fromCharCode( 97 + i ))
 stop_words = stop_words.concat(...lowerAlpahs)
-const lines = fs.readFileSync(process.argv[2], 'utf8').split('\n')
+
 const alnumRegExp = new RegExp(/^[a-z0-9]+$/i)
 const isalnum = (word) => word.replace(alnumRegExp, "").length === 0
 
 
-for(const line of lines) {
+
+async function processLineByLine() {
+  const rl = readline.createInterface({
+    input: fs.createReadStream(process.argv[2])
+  })
+
+  for await (const line of rl) {
+    console.log(line)
     let start_char_idx = null;
     i = 0;
     for(const char of line) {
@@ -48,8 +57,12 @@ for(const line of lines) {
         }
         i ++
     }
+  }
+
 }
 
-for(let i = 0; i < 25 ; i++) {
+processLineByLine().then(() => {
+  for(let i = 0; i < 25 ; i++) {
     console.log(word_freqs[i][0], ' - ', word_freqs[i][1])
-}
+  }
+})

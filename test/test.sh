@@ -23,27 +23,21 @@ fi
 files=$(echo *.txt)
 suite_start=$(date +"%s")
 for dir in $styles_to_test ; do
-    cd $dir 
+    cd $dir
     for file in $files ; do
-        msg $file $dir
         for exe in * ; do
             if [ -x $exe ]; then
                 msg $(date +%T) testing $(basename $dir)/$exe with $file
                 expected=$mydir/$file
 				test_start=$(date +"%s")
 				if [ -e $dir/autorun ] ; then
-					actual=$(./$exe <autorun | grep -)
+					actual=$(./$exe <autorun | grep \# | awk '{print $2,$3,$4}')
 				else
                 	actual=$(./$exe ../$file | grep -)
 				fi
 				test_end=$(date +"%s")
                 echo "$actual" | diff -b $expected - > /dev/null
                 result=$?
-                if $(diff "$actual" - "$expected")
-                then msg no difference
-                else msg difference
-                fi
-                msg ---------
                 total=$((total+1))
                 if [ $result -ne 0 ]; then
                     echo 
