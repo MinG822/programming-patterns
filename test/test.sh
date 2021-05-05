@@ -23,39 +23,27 @@ fi
 files=$(echo *.txt)
 suite_start=$(date +"%s")
 for dir in $styles_to_test ; do
-    cd $dir 
+    cd $dir
     for file in $files ; do
-        msg $file $dir
         for exe in * ; do
-            if [ -x $exe ]; then
-                msg $(date +%T) testing $(basename $dir)/$exe with $file
-                expected=$mydir/$file
-				test_start=$(date +"%s")
-				if [ -e $dir/autorun ] ; then
-					actual=$(./$exe <autorun | grep -)
-				else
-                	actual=$(./$exe ../$file | grep -)
-				fi
-				test_end=$(date +"%s")
-                echo "$actual" | diff -b $expected - > /dev/null
-                result=$?
-                if $(diff "$actual" - "$expected")
-                then msg no difference
-                else msg difference
-                fi
-                msg ---------
-                total=$((total+1))
-                if [ $result -ne 0 ]; then
-                    echo 
-                    echo "    Expected            Actual"
-                    echo "-----------------  -----------------"
-                    echo "$actual" | paste $expected - | column -t
-                    echo 
-                    failures=$(($failures+1))
-                    msg $exe FAILED in $(date_diff $test_start $test_end)!
-                else
-                    msg $exe passed in $(date_diff $test_start $test_end).
-                fi
+            msg $(date +%T) testing $(basename $dir)/$exe with $file
+            expected=$mydir/$file
+            test_start=$(date +"%s")
+            actual=$(./$exe ../$file)
+            test_end=$(date +"%s")
+            echo "$actual" | diff -b $expected - > /dev/null
+            result=$?            
+            total=$((total+1))
+            if [ $result -ne 0 ]; then
+                failures=$(($failures+1))
+                echo 
+                echo "    Expected            Actual"
+                echo "-----------------  -----------------"
+                echo "$actual" | paste $expected - | column -t
+                echo 
+                msg $exe FAILED in $(date_diff $test_start $test_end)!
+            else
+                msg $exe passed in $(date_diff $test_start $test_end).
             fi
         done
     done
