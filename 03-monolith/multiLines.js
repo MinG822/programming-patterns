@@ -1,7 +1,11 @@
 #! /usr/bin/env node
 const fs = require('fs')
 let word_freqs = []
+<<<<<<< HEAD:03-monolith/multiLines.js
 let stop_words = fs.readFileSync('../stop_words.txt','utf8').split(',')
+=======
+let stop_words = fs.readFileSync('stop_words.txt','utf8').split(',')
+>>>>>>> 82c102a0df04bea06384bbf6aaad24281d084592:03-monolith/monolith.js
 
 let lowerAlpahs = Array(26).fill(1).map((_, i) => String.fromCharCode( 97 + i ))
 stop_words = stop_words.concat(...lowerAlpahs)
