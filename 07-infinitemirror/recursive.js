@@ -28,11 +28,11 @@ const wordTopPrint = (sortedWordFreqs) => {
     wordTopPrint(sortedWordFreqs)
 }
 
-let stopWords = fs.readFileSync('../stop_words.txt', 'utf8').split(',')
 const lowerAlpah = Array(26).fill(1).map((_, i) => String.fromCharCode( 97 + i ))
-stopWords.concat(...['', ...lowerAlpah]);
+const stopWords = fs.readFileSync('../stop_words.txt', 'utf8').split(',').concat(lowerAlpah, [""])
 
 const words = fs.readFileSync(process.argv[2], 'utf8').split('').reduce((acc, curr)=> curr.replace(alnumRegExp, "").length === 0 ? acc + curr.toLowerCase() : acc + " ", "").split(" ")
+
 const wordFreqs = {}
 for (let i = 0; i < words.length;) {
     count(words.slice(i, i+RECURSION_LIMIT), stopWords, wordFreqs)
