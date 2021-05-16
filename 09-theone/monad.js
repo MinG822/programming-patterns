@@ -36,7 +36,7 @@ const scan = (strData) => {
 const removeStopWords = (words) => {
     const lowerAlpah = Array(26).fill(1).map((_, i) => String.fromCharCode( 97 + i ))
     const stopWords = fs.readFileSync('../stop_words.txt', 'utf8').split(',').concat(lowerAlpah, ["", " "])
-    return words.filter(w => w!=="" && !stopWords.includes(w)) 
+    return words.filter(w => !stopWords.includes(w)) 
 }
 
 const frequencies = (words) => {
